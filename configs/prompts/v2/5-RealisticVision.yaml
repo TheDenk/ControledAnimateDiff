@@ -1,6 +1,6 @@
 RealisticVision:
   base: ""
-  path: "models/DreamBooth_LoRA/realisticVisionV20_v20.safetensors"
+  path: "models/DreamBooth_LoRA/rv.safetensors"
 
   inference_config: "configs/inference/inference-v2.yaml"
   motion_module:

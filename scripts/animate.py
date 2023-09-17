@@ -10,13 +10,6 @@ from pathlib import Path
 
 import diffusers
 import torch
-from animatediff.models.unet import UNet3DConditionModel
-from animatediff.pipelines.pipeline_animation import AnimationPipeline
-from animatediff.utils.convert_from_ckpt import (convert_ldm_clip_checkpoint,
-                                                 convert_ldm_unet_checkpoint,
-                                                 convert_ldm_vae_checkpoint)
-from animatediff.utils.convert_lora_safetensor_to_diffusers import convert_lora
-from animatediff.utils.util import save_videos_grid
 from diffusers import AutoencoderKL, DDIMScheduler
 from diffusers.utils.import_utils import is_xformers_available
 from einops import rearrange, repeat
@@ -24,6 +17,14 @@ from omegaconf import OmegaConf
 from safetensors import safe_open
 from tqdm.auto import tqdm
 from transformers import CLIPTextModel, CLIPTokenizer
+
+from animatediff.models.unet import UNet3DConditionModel
+from animatediff.pipelines.pipeline_animation import AnimationPipeline
+from animatediff.utils.convert_from_ckpt import (convert_ldm_clip_checkpoint,
+                                                 convert_ldm_unet_checkpoint,
+                                                 convert_ldm_vae_checkpoint)
+from animatediff.utils.convert_lora_safetensor_to_diffusers import convert_lora
+from animatediff.utils.util import save_videos_grid
 
 
 def main(args):
@@ -173,8 +174,6 @@ if __name__ == "__main__":
     parser.add_argument("--context_length", type=int, default=0, help="temporal transformer context length (0 for same as -L)")
     parser.add_argument("--context_stride", type=int, default=0, help="max stride of motion is 2^context_stride")
     parser.add_argument("--context_overlap", type=int, default=-1, help="overlap between chunks of context (-1 for half of context length)")
-
-    parser.add_argument("--format", type=str, default="gif")
 
     parser.add_argument("--L", type=int, default=16)
     parser.add_argument("--W", type=int, default=512)
